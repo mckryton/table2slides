@@ -3,14 +3,21 @@ Attribute VB_Name = "TSupport"
 
 Option Explicit
 
-'mocking loading features from disk
-Public Sub load_feature_from_text(feature_text As String, loaded_features As Collection, Optional feature_origin As String)
+Public Sub write_data_table_to_sheet(data_table As TDataTable, target_sheet As Worksheet)
+
+    Dim column_name As Variant
+    Dim data_row As Variant
+    Dim current_range As Range
+    Dim table_top_left As Range
     
-    Dim loaded_feature As Collection
-    
-    If IsMissing(feature_origin) Then feature_origin = vbNullString
-    Set loaded_feature = New Collection
-    loaded_feature.Add feature_text, "feature_text"
-    loaded_feature.Add feature_origin, "origin"
-    loaded_features.Add loaded_feature
+    Set table_top_left = target_sheet.Range("B2")
+    Set current_range = table_top_left
+    For Each column_name In data_table.column_names
+        current_range.Value = "'" & CStr(column_name)
+        For Each data_row In data_table.table_rows
+            Set current_range = current_range.Offset(1)
+            current_range.Value = "'" & data_row(column_name)
+        Next
+        Set current_range = table_top_left.Offset(, current_range.Row - 1)
+    Next
 End Sub

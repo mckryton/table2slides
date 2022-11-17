@@ -34,7 +34,8 @@ Private Property Get StepImplementations() As Collection
     Set m_step_implementations = New Collection
     'REGISTER all classes with STEP IMPLEMENTATIONS HERE >>>
     '-------------------------------------------------------
-    step_implementations = Array()
+    step_implementations = Array(New Steps_convert_table)
+    '-------------------------------------------------------
     Set m_step_implementations = New Collection
     For Each step_implementation_class In step_implementations
         m_step_implementations.Add step_implementation_class
